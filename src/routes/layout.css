@@ -1,0 +1,201 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+:root {
+	--gothic-black: #0a0a0a;
+	--gothic-purple: #6b21a8;
+	--gothic-magenta: #db2777;
+	--gothic-crimson: #dc2626;
+	--gothic-gold: #f59e0b;
+	--gothic-emerald: #10b981;
+	--gothic-cyan: #06b6d4;
+	--gothic-violet: #8b5cf6;
+	--parchment: #1a1a2e;
+	--parchment-light: #16213e;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+	background: var(--gothic-black);
+	color: #e2e8f0;
+	font-family: 'EB Garamond', serif;
+}
+
+body {
+	background:
+		radial-gradient(ellipse at 20% 50%, rgba(107, 33, 168, 0.15) 0%, transparent 50%),
+		radial-gradient(ellipse at 80% 20%, rgba(219, 39, 119, 0.1) 0%, transparent 50%),
+		radial-gradient(ellipse at 50% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+		var(--gothic-black);
+}
+
+h1, h2, h3 {
+	font-family: 'Cinzel Decorative', serif;
+}
+
+.font-fraktur {
+	font-family: 'UnifrakturMaguntia', cursive;
+}
+
+.font-cinzel {
+	font-family: 'Cinzel Decorative', serif;
+}
+
+.font-garamond {
+	font-family: 'EB Garamond', serif;
+}
+
+/* Gothic ornamental border */
+.gothic-border {
+	border: 2px solid var(--gothic-purple);
+	box-shadow:
+		0 0 15px rgba(107, 33, 168, 0.3),
+		inset 0 0 15px rgba(107, 33, 168, 0.1);
+	position: relative;
+}
+
+.gothic-border::before {
+	content: '';
+	position: absolute;
+	inset: 3px;
+	border: 1px solid rgba(139, 92, 246, 0.3);
+	pointer-events: none;
+}
+
+/* Glow text */
+.glow-text {
+	text-shadow:
+		0 0 10px currentColor,
+		0 0 20px currentColor,
+		0 0 40px currentColor;
+}
+
+/* Pulsing glow animation */
+@keyframes pulse-glow {
+	0%, 100% { opacity: 0.6; }
+	50% { opacity: 1; }
+}
+
+.animate-pulse-glow {
+	animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Fade in */
+@keyframes fade-in-up {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.animate-fade-in {
+	animation: fade-in-up 0.8s ease-out forwards;
+}
+
+/* Mystical shimmer */
+@keyframes shimmer {
+	0% { background-position: -200% center; }
+	100% { background-position: 200% center; }
+}
+
+.shimmer-text {
+	background: linear-gradient(
+		90deg,
+		var(--gothic-magenta),
+		var(--gothic-gold),
+		var(--gothic-cyan),
+		var(--gothic-violet),
+		var(--gothic-magenta)
+	);
+	background-size: 200% auto;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	animation: shimmer 4s linear infinite;
+}
+
+/* Gothic button */
+.gothic-btn {
+	font-family: 'Cinzel Decorative', serif;
+	background: linear-gradient(135deg, var(--gothic-purple), var(--gothic-magenta));
+	color: white;
+	border: 1px solid rgba(139, 92, 246, 0.5);
+	padding: 0.75rem 2rem;
+	font-size: 1.1rem;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+}
+
+.gothic-btn:hover {
+	box-shadow:
+		0 0 20px rgba(219, 39, 119, 0.4),
+		0 0 40px rgba(107, 33, 168, 0.3);
+	transform: translateY(-2px);
+}
+
+.gothic-btn:active {
+	transform: translateY(0);
+}
+
+.gothic-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	transform: none;
+	box-shadow: none;
+}
+
+/* Star decorations */
+.stars {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	overflow: hidden;
+	z-index: 0;
+}
+
+.star {
+	position: absolute;
+	width: 2px;
+	height: 2px;
+	background: white;
+	border-radius: 50%;
+	opacity: 0;
+	animation: twinkle var(--duration) var(--delay) infinite;
+}
+
+@keyframes twinkle {
+	0%, 100% { opacity: 0; }
+	50% { opacity: var(--brightness); }
+}
+
+/* Collage grid */
+.collage-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+	gap: 4px;
+}
+
+.collage-grid img {
+	width: 100%;
+	aspect-ratio: 1;
+	object-fit: cover;
+	border: 1px solid rgba(139, 92, 246, 0.3);
+	transition: all 0.3s ease;
+}
+
+.collage-grid img:hover {
+	border-color: var(--gothic-magenta);
+	box-shadow: 0 0 15px rgba(219, 39, 119, 0.4);
+	transform: scale(1.05);
+	z-index: 10;
+	position: relative;
+}
