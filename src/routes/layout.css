@@ -177,25 +177,77 @@ h1, h2, h3 {
 	50% { opacity: var(--brightness); }
 }
 
+/* Floating hand animation for collage */
+@keyframes float-hand {
+	0%, 100% {
+		transform: translateY(0) rotate(var(--card-rot, 0deg));
+	}
+	50% {
+		transform: translateY(var(--float-dist, -10px)) rotate(calc(var(--card-rot, 0deg) + 1.5deg));
+	}
+}
+
+/* Mist blob drift */
+@keyframes mist-drift {
+	0%, 100% {
+		transform: translate(0, 0) scale(1);
+		opacity: var(--mist-opacity, 0.12);
+	}
+	50% {
+		transform: translate(var(--drift-x, 30px), var(--drift-y, -20px)) scale(1.25);
+		opacity: calc(var(--mist-opacity, 0.12) * 0.45);
+	}
+}
+
+/* Collage container */
+.collage-mist-container {
+	position: relative;
+}
+
+/* Floating mist blobs */
+.mist-blob {
+	position: absolute;
+	border-radius: 50%;
+	filter: blur(55px);
+	pointer-events: none;
+	z-index: 5;
+	animation: mist-drift var(--mist-duration, 8s) ease-in-out infinite;
+}
+
+/* Edge vignette */
+.mist-vignette {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 6;
+	background:
+		linear-gradient(to bottom, rgba(10,10,10,0.75) 0%, transparent 18%, transparent 82%, rgba(10,10,10,0.75) 100%),
+		linear-gradient(to right, rgba(10,10,10,0.6) 0%, transparent 12%, transparent 88%, rgba(10,10,10,0.6) 100%);
+}
+
 /* Collage grid */
 .collage-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-	gap: 4px;
+	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+	gap: 6px;
 }
 
-.collage-grid img {
+/* Individual collage hand image */
+.collage-hand-img {
 	width: 100%;
 	aspect-ratio: 1;
 	object-fit: cover;
-	border: 1px solid rgba(139, 92, 246, 0.3);
-	transition: all 0.3s ease;
+	border: 1px solid rgba(139, 92, 246, 0.35);
+	transition: border-color 0.4s ease, box-shadow 0.4s ease;
+	animation: float-hand var(--float-duration, 6s) var(--float-delay, 0s) ease-in-out infinite;
+	transform-origin: center;
 }
 
-.collage-grid img:hover {
+.collage-hand-img:hover {
 	border-color: var(--gothic-magenta);
-	box-shadow: 0 0 15px rgba(219, 39, 119, 0.4);
-	transform: scale(1.05);
-	z-index: 10;
+	box-shadow:
+		0 0 25px rgba(219, 39, 119, 0.6),
+		0 0 50px rgba(107, 33, 168, 0.3);
 	position: relative;
+	z-index: 20;
 }

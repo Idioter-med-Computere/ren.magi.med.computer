@@ -426,10 +426,30 @@
 					</p>
 				</div>
 			{:else}
-				<div class="collage-grid">
-					{#each collageImages as img}
-						<img src={img} alt="A hand offered to the Oracle" loading="lazy" />
-					{/each}
+				<div class="collage-mist-container rounded-lg overflow-hidden">
+					<!-- Floating mist blobs -->
+					<div class="mist-blob" style="width:300px;height:300px;background:rgba(107,33,168,0.22);top:5%;left:3%;--drift-x:45px;--drift-y:-35px;--mist-duration:9s;--mist-opacity:0.18;"></div>
+					<div class="mist-blob" style="width:200px;height:200px;background:rgba(6,182,212,0.18);top:55%;left:65%;--drift-x:-35px;--drift-y:-45px;--mist-duration:12s;--mist-opacity:0.14;"></div>
+					<div class="mist-blob" style="width:250px;height:250px;background:rgba(219,39,119,0.18);top:75%;left:15%;--drift-x:55px;--drift-y:25px;--mist-duration:7s;--mist-opacity:0.16;"></div>
+					<div class="mist-blob" style="width:170px;height:170px;background:rgba(139,92,246,0.25);top:15%;left:78%;--drift-x:-25px;--drift-y:-55px;--mist-duration:14s;--mist-opacity:0.22;"></div>
+					<div class="mist-blob" style="width:230px;height:230px;background:rgba(107,33,168,0.15);top:40%;left:35%;--drift-x:65px;--drift-y:35px;--mist-duration:10s;--mist-opacity:0.1;"></div>
+					<div class="mist-blob" style="width:180px;height:180px;background:rgba(16,185,129,0.12);top:85%;left:55%;--drift-x:-40px;--drift-y:-20px;--mist-duration:11s;--mist-opacity:0.1;"></div>
+
+					<!-- Images grid -->
+					<div class="collage-grid">
+						{#each collageImages as img, i}
+							<img
+								src={img}
+								alt="A hand offered to the Oracle"
+								loading="lazy"
+								class="collage-hand-img"
+								style="--float-duration: {(4 + (i * 1.3) % 4).toFixed(1)}s; --float-delay: {((i * 0.9) % 3).toFixed(1)}s; --float-dist: {-(6 + (i * 3) % 10)}px; --card-rot: {(((i % 7) - 3) * 0.8).toFixed(1)}deg;"
+							/>
+						{/each}
+					</div>
+
+					<!-- Edge mist vignette -->
+					<div class="mist-vignette"></div>
 				</div>
 			{/if}
 
