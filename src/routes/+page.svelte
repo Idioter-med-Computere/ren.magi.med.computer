@@ -451,25 +451,25 @@
 						/>
 					{/each}
 
-					<!-- Thick colorful mystical mist ON TOP of hands -->
-					<!-- White ethereal fog -->
-					<div class="mist-blob" style="width:560px;height:560px;background:radial-gradient(ellipse,rgba(255,255,255,0.75) 0%,transparent 70%);top:-8%;left:18%;--drift-x:45px;--drift-y:35px;--mist-duration:13s;"></div>
-					<div class="mist-blob" style="width:460px;height:460px;background:radial-gradient(ellipse,rgba(255,255,255,0.6) 0%,transparent 70%);top:58%;left:-8%;--drift-x:60px;--drift-y:-45px;--mist-duration:17s;"></div>
-					<div class="mist-blob" style="width:400px;height:400px;background:radial-gradient(ellipse,rgba(255,255,255,0.55) 0%,transparent 70%);top:28%;left:58%;--drift-x:-55px;--drift-y:38px;--mist-duration:15s;"></div>
+					<!-- Advanced fog: wander + morph animations, screen-blended light blobs -->
+					<!-- White ethereal light fog (screen blend = glows over images) -->
+					<div class="mist-blob fog-a fog-light" style="width:580px;height:580px;background:radial-gradient(ellipse,rgba(255,255,255,0.78) 0%,transparent 70%);top:-10%;left:16%;--fog-duration:21s;--morph-duration:9s;--fog-delay:0s;"></div>
+					<div class="mist-blob fog-c fog-light" style="width:480px;height:480px;background:radial-gradient(ellipse,rgba(255,255,255,0.65) 0%,transparent 70%);top:56%;left:-10%;--fog-duration:26s;--morph-duration:13s;--fog-delay:-4s;"></div>
+					<div class="mist-blob fog-b fog-light" style="width:420px;height:420px;background:radial-gradient(ellipse,rgba(255,255,255,0.58) 0%,transparent 70%);top:26%;left:56%;--fog-duration:23s;--morph-duration:11s;--fog-delay:-9s;"></div>
 					<!-- Deep purple -->
-					<div class="mist-blob" style="width:480px;height:480px;background:radial-gradient(ellipse,rgba(107,33,168,0.9) 0%,transparent 70%);top:2%;left:0%;--drift-x:65px;--drift-y:-45px;--mist-duration:9s;"></div>
-					<div class="mist-blob" style="width:420px;height:420px;background:radial-gradient(ellipse,rgba(107,33,168,0.8) 0%,transparent 70%);top:42%;left:35%;--drift-x:80px;--drift-y:50px;--mist-duration:11s;"></div>
+					<div class="mist-blob fog-d" style="width:500px;height:500px;background:radial-gradient(ellipse,rgba(107,33,168,0.9) 0%,transparent 70%);top:0%;left:-2%;--fog-duration:18s;--morph-duration:7s;--fog-delay:-2s;"></div>
+					<div class="mist-blob fog-a" style="width:440px;height:440px;background:radial-gradient(ellipse,rgba(107,33,168,0.8) 0%,transparent 70%);top:40%;left:33%;--fog-duration:24s;--morph-duration:10s;--fog-delay:-7s;"></div>
 					<!-- Magenta -->
-					<div class="mist-blob" style="width:380px;height:380px;background:radial-gradient(ellipse,rgba(219,39,119,0.85) 0%,transparent 70%);top:68%;left:8%;--drift-x:70px;--drift-y:32px;--mist-duration:7s;"></div>
-					<div class="mist-blob" style="width:300px;height:300px;background:radial-gradient(ellipse,rgba(219,39,119,0.75) 0%,transparent 70%);top:22%;left:52%;--drift-x:42px;--drift-y:65px;--mist-duration:9s;"></div>
+					<div class="mist-blob fog-b" style="width:400px;height:400px;background:radial-gradient(ellipse,rgba(219,39,119,0.88) 0%,transparent 70%);top:66%;left:6%;--fog-duration:16s;--morph-duration:8s;--fog-delay:-1s;"></div>
+					<div class="mist-blob fog-c" style="width:310px;height:310px;background:radial-gradient(ellipse,rgba(219,39,119,0.78) 0%,transparent 70%);top:20%;left:50%;--fog-duration:20s;--morph-duration:12s;--fog-delay:-6s;"></div>
 					<!-- Cyan -->
-					<div class="mist-blob" style="width:350px;height:350px;background:radial-gradient(ellipse,rgba(6,182,212,0.85) 0%,transparent 70%);top:52%;left:60%;--drift-x:-50px;--drift-y:-58px;--mist-duration:12s;"></div>
-					<div class="mist-blob" style="width:260px;height:260px;background:radial-gradient(ellipse,rgba(6,182,212,0.7) 0%,transparent 70%);top:12%;left:42%;--drift-x:32px;--drift-y:-48px;--mist-duration:8s;"></div>
+					<div class="mist-blob fog-d" style="width:370px;height:370px;background:radial-gradient(ellipse,rgba(6,182,212,0.88) 0%,transparent 70%);top:50%;left:58%;--fog-duration:22s;--morph-duration:9s;--fog-delay:-3s;"></div>
+					<div class="mist-blob fog-a" style="width:270px;height:270px;background:radial-gradient(ellipse,rgba(6,182,212,0.72) 0%,transparent 70%);top:10%;left:40%;--fog-duration:14s;--morph-duration:7s;--fog-delay:-8s;"></div>
 					<!-- Violet -->
-					<div class="mist-blob" style="width:320px;height:320px;background:radial-gradient(ellipse,rgba(139,92,246,0.9) 0%,transparent 70%);top:8%;left:70%;--drift-x:-32px;--drift-y:-68px;--mist-duration:14s;"></div>
-					<div class="mist-blob" style="width:280px;height:280px;background:radial-gradient(ellipse,rgba(139,92,246,0.75) 0%,transparent 70%);top:78%;left:45%;--drift-x:-55px;--drift-y:30px;--mist-duration:10s;"></div>
-					<!-- Gold accent -->
-					<div class="mist-blob" style="width:240px;height:240px;background:radial-gradient(ellipse,rgba(245,158,11,0.7) 0%,transparent 70%);top:35%;left:8%;--drift-x:50px;--drift-y:-30px;--mist-duration:16s;"></div>
+					<div class="mist-blob fog-b" style="width:340px;height:340px;background:radial-gradient(ellipse,rgba(139,92,246,0.92) 0%,transparent 70%);top:6%;left:68%;--fog-duration:27s;--morph-duration:11s;--fog-delay:-10s;"></div>
+					<div class="mist-blob fog-c" style="width:290px;height:290px;background:radial-gradient(ellipse,rgba(139,92,246,0.78) 0%,transparent 70%);top:76%;left:43%;--fog-duration:18s;--morph-duration:8s;--fog-delay:-5s;"></div>
+					<!-- Gold -->
+					<div class="mist-blob fog-d" style="width:250px;height:250px;background:radial-gradient(ellipse,rgba(245,158,11,0.72) 0%,transparent 70%);top:33%;left:6%;--fog-duration:29s;--morph-duration:14s;--fog-delay:-12s;"></div>
 
 					<!-- Edge vignette -->
 					<div class="mist-vignette"></div>

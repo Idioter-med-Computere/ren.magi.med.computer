@@ -187,29 +187,84 @@ h1, h2, h3 {
 	}
 }
 
-/* Mist blob drift — transform only, no opacity fade */
-@keyframes mist-drift {
-	0%, 100% {
-		transform: translate(0, 0) scale(1);
-	}
-	50% {
-		transform: translate(var(--drift-x, 30px), var(--drift-y, -20px)) scale(1.18);
-	}
+/* ── Fog wander paths: 4 organic multi-point routes ── */
+@keyframes fog-wander-1 {
+	0%   { transform: translate(0,0)        rotate(0deg)   scale(1);    }
+	20%  { transform: translate(45px,-28px) rotate(7deg)   scale(1.08); }
+	45%  { transform: translate(78px,18px)  rotate(-5deg)  scale(1.13); }
+	65%  { transform: translate(32px,52px)  rotate(8deg)   scale(1.06); }
+	85%  { transform: translate(-22px,24px) rotate(-10deg) scale(0.94); }
+	100% { transform: translate(0,0)        rotate(0deg)   scale(1);    }
+}
+@keyframes fog-wander-2 {
+	0%   { transform: translate(0,0)        rotate(0deg)   scale(1);    }
+	25%  { transform: translate(-38px,32px) rotate(-14deg) scale(1.12); }
+	55%  { transform: translate(22px,-48px) rotate(8deg)   scale(0.90); }
+	80%  { transform: translate(58px,-14px) rotate(-7deg)  scale(1.09); }
+	100% { transform: translate(0,0)        rotate(0deg)   scale(1);    }
+}
+@keyframes fog-wander-3 {
+	0%   { transform: translate(0,0)        rotate(0deg)   scale(1);    }
+	30%  { transform: translate(52px,22px)  rotate(16deg)  scale(1.11); }
+	60%  { transform: translate(-32px,48px) rotate(-9deg)  scale(1.18); }
+	100% { transform: translate(0,0)        rotate(0deg)   scale(1);    }
+}
+@keyframes fog-wander-4 {
+	0%   { transform: translate(0,0)         rotate(0deg)   scale(1);    }
+	35%  { transform: translate(-52px,-38px) rotate(-20deg) scale(0.88); }
+	70%  { transform: translate(28px,32px)   rotate(12deg)  scale(1.15); }
+	100% { transform: translate(0,0)         rotate(0deg)   scale(1);    }
 }
 
-/* Collage container */
-.collage-mist-container {
-	position: relative;
+/* ── Organic blob morphing: amoeba border-radius shifting ── */
+@keyframes fog-morph-1 {
+	0%, 100% { border-radius: 60% 40% 65% 35% / 48% 55% 45% 62%; }
+	33%       { border-radius: 42% 58% 38% 62% / 62% 40% 60% 42%; }
+	66%       { border-radius: 65% 35% 52% 48% / 38% 66% 46% 58%; }
+}
+@keyframes fog-morph-2 {
+	0%, 100% { border-radius: 48% 52% 70% 30% / 56% 44% 58% 42%; }
+	40%       { border-radius: 70% 30% 45% 55% / 40% 60% 36% 64%; }
+	70%       { border-radius: 35% 65% 58% 42% / 66% 36% 56% 44%; }
+}
+@keyframes fog-morph-3 {
+	0%, 100% { border-radius: 55% 45% 42% 58% / 58% 50% 52% 42%; }
+	50%       { border-radius: 42% 58% 62% 38% / 44% 66% 36% 54%; }
 }
 
-/* Floating mist blobs */
+/* ── Base mist blob ── */
 .mist-blob {
 	position: absolute;
-	border-radius: 50%;
 	filter: blur(85px);
 	pointer-events: none;
 	z-index: 5;
-	animation: mist-drift var(--mist-duration, 8s) ease-in-out infinite;
+}
+
+/* ── Four movement + morph variants ── */
+.fog-a {
+	animation:
+		fog-wander-1 var(--fog-duration, 20s) var(--fog-delay, 0s) ease-in-out infinite,
+		fog-morph-1  var(--morph-duration, 9s) var(--fog-delay, 0s) ease-in-out infinite;
+}
+.fog-b {
+	animation:
+		fog-wander-2 var(--fog-duration, 22s) var(--fog-delay, 0s) ease-in-out infinite,
+		fog-morph-2  var(--morph-duration, 11s) var(--fog-delay, 0s) ease-in-out infinite;
+}
+.fog-c {
+	animation:
+		fog-wander-3 var(--fog-duration, 18s) var(--fog-delay, 0s) ease-in-out infinite,
+		fog-morph-1  var(--morph-duration, 7s) var(--fog-delay, 0s) ease-in-out infinite;
+}
+.fog-d {
+	animation:
+		fog-wander-4 var(--fog-duration, 24s) var(--fog-delay, 0s) ease-in-out infinite,
+		fog-morph-3  var(--morph-duration, 13s) var(--fog-delay, 0s) ease-in-out infinite;
+}
+
+/* Screen blend — light blobs glow like divine mist over dark images */
+.fog-light {
+	mix-blend-mode: screen;
 }
 
 /* Edge vignette */
