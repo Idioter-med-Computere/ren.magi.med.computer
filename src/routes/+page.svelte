@@ -23,8 +23,10 @@
 	let collageImages = $state<string[]>([]);
 	let loadingCollage = $state(false);
 
-	type CollageItem = { url: string; x: number; y: number; size: number; floatDuration: number; floatDelay: number; floatDist: number; cardRot: number };
+	type CollageItem = { url: string; x: number; y: number; size: number; floatDuration: number; floatDelay: number; dxa: number; dya: number; dxb: number; dyb: number; dxc: number; dyc: number; cardRot: number; isDragging: boolean };
 	let collageItems = $state<CollageItem[]>([]);
+	let containerEl = $state<HTMLDivElement | null>(null);
+	let dragging = $state<{ index: number; startX: number; startY: number; itemStartX: number; itemStartY: number } | null>(null);
 
 	// Stars background
 	let stars = $state<Array<{ x: number; y: number; duration: number; delay: number; brightness: number }>>([]);
@@ -155,22 +157,57 @@
 		}
 	}
 
+	function randDir(mag: number) { return (Math.random() - 0.5) * 2 * mag; }
+
 	async function showCollage() {
 		phase = 'collage';
 		loadingCollage = true;
 		readingVisible = false;
 		collageImages = await getAllHandImages();
-		collageItems = collageImages.map((url) => ({
-			url,
-			x: 2 + Math.random() * 72,
-			y: 2 + Math.random() * 72,
-			size: 130 + Math.floor(Math.random() * 100),
-			floatDuration: 4 + Math.random() * 6,
-			floatDelay: Math.random() * 5,
-			floatDist: -(6 + Math.random() * 16),
-			cardRot: (Math.random() - 0.5) * 14,
-		}));
+		collageItems = collageImages.map((url) => {
+			const dur = 9 + Math.random() * 10;
+			return {
+				url,
+				x: 5 + Math.random() * 68,
+				y: 5 + Math.random() * 68,
+				size: 130 + Math.floor(Math.random() * 100),
+				floatDuration: dur,
+				floatDelay: -(Math.random() * dur),
+				dxa: randDir(55), dya: randDir(55),
+				dxb: randDir(45), dyb: randDir(45),
+				dxc: randDir(40), dyc: randDir(40),
+				cardRot: (Math.random() - 0.5) * 14,
+				isDragging: false,
+			};
+		});
 		loadingCollage = false;
+	}
+
+	function onDragStart(e: PointerEvent, index: number) {
+		e.preventDefault();
+		const el = e.currentTarget as HTMLElement;
+		const item = collageItems[index];
+		// Absorb the current animation translate into base position before pausing
+		const matrix = new DOMMatrix(window.getComputedStyle(el).transform);
+		const cont = containerEl!.getBoundingClientRect();
+		collageItems[index].x = item.x + (matrix.m41 / cont.width) * 100;
+		collageItems[index].y = item.y + (matrix.m42 / cont.height) * 100;
+		collageItems[index].isDragging = true;
+		dragging = { index, startX: e.clientX, startY: e.clientY, itemStartX: collageItems[index].x, itemStartY: collageItems[index].y };
+		el.setPointerCapture(e.pointerId);
+	}
+
+	function onDragMove(e: PointerEvent) {
+		if (!dragging || !containerEl) return;
+		const cont = containerEl.getBoundingClientRect();
+		collageItems[dragging.index].x = dragging.itemStartX + ((e.clientX - dragging.startX) / cont.width) * 100;
+		collageItems[dragging.index].y = dragging.itemStartY + ((e.clientY - dragging.startY) / cont.height) * 100;
+	}
+
+	function onDragEnd() {
+		if (!dragging) return;
+		collageItems[dragging.index].isDragging = false;
+		dragging = null;
 	}
 
 	function backToStart() {
@@ -415,6 +452,10 @@
 
 	<!-- ═══════════════ COLLAGE PHASE ═══════════════ -->
 	{:else if phase === 'collage'}
+		<!-- Return button fixed top-left -->
+		<button class="fixed top-4 left-4 z-50 gothic-btn rounded-lg !py-2 !px-5 !text-sm" onclick={backToStart}>
+			&#8592; Oracle
+		</button>
 		<div class="mx-auto max-w-6xl animate-fade-in">
 			<div class="text-center mb-8">
 				<img src="/logo.webp" alt="Ren Magi" class="mx-auto mb-4 w-32 md:w-40 drop-shadow-[0_0_20px_rgba(107,33,168,0.4)]" />
@@ -439,15 +480,19 @@
 					</p>
 				</div>
 			{:else}
-				<div class="collage-free-container">
+				<div class="collage-free-container" bind:this={containerEl}>
 					<!-- Hands floating freely -->
-					{#each collageItems as item}
+					{#each collageItems as item, i}
 						<img
 							src={item.url}
 							alt="A hand offered to the Oracle"
 							loading="lazy"
 							class="collage-hand-img"
-							style="left:{item.x.toFixed(1)}%;top:{item.y.toFixed(1)}%;width:{item.size}px;--float-duration:{item.floatDuration.toFixed(1)}s;--float-delay:{item.floatDelay.toFixed(1)}s;--float-dist:{item.floatDist.toFixed(0)}px;--card-rot:{item.cardRot.toFixed(1)}deg;"
+							class:is-dragging={item.isDragging}
+							style="left:{item.x.toFixed(1)}%;top:{item.y.toFixed(1)}%;width:{item.size}px;--float-duration:{item.floatDuration.toFixed(1)}s;--float-delay:{item.floatDelay.toFixed(1)}s;--dxa:{item.dxa.toFixed(0)}px;--dya:{item.dya.toFixed(0)}px;--dxb:{item.dxb.toFixed(0)}px;--dyb:{item.dyb.toFixed(0)}px;--dxc:{item.dxc.toFixed(0)}px;--dyc:{item.dyc.toFixed(0)}px;--card-rot:{item.cardRot.toFixed(1)}deg;"
+							onpointerdown={(e) => onDragStart(e, i)}
+							onpointermove={onDragMove}
+							onpointerup={onDragEnd}
 						/>
 					{/each}
 
@@ -476,11 +521,6 @@
 				</div>
 			{/if}
 
-			<div class="text-center mt-8">
-				<button class="gothic-btn rounded-lg" onclick={backToStart}>
-					&#9764; Return to the Oracle &#9764;
-				</button>
-			</div>
 		</div>
 	{/if}
 </main>

@@ -177,14 +177,13 @@ h1, h2, h3 {
 	50% { opacity: var(--brightness); }
 }
 
-/* Floating hand animation for collage */
+/* Floating hand animation — 2D wander, NO rotation in transform (separate rotate property) */
 @keyframes float-hand {
-	0%, 100% {
-		transform: translateY(0) rotate(var(--card-rot, 0deg));
-	}
-	50% {
-		transform: translateY(var(--float-dist, -10px)) rotate(calc(var(--card-rot, 0deg) + 1.5deg));
-	}
+	0%   { transform: translate(0, 0); }
+	25%  { transform: translate(var(--dxa, 12px), var(--dya, -18px)); }
+	55%  { transform: translate(var(--dxb, -8px), var(--dyb, -28px)); }
+	80%  { transform: translate(var(--dxc, 16px), var(--dyc, -12px)); }
+	100% { transform: translate(0, 0); }
 }
 
 /* ── Fog wander paths: 4 organic multi-point routes ── */
@@ -294,7 +293,21 @@ h1, h2, h3 {
 	object-fit: cover;
 	border: 1px solid rgba(139, 92, 246, 0.3);
 	z-index: 1;
+	/* rotate is a separate CSS property — doesn't fight with the animated transform */
+	rotate: var(--card-rot, 0deg);
+	will-change: transform;
 	animation: float-hand var(--float-duration, 6s) var(--float-delay, 0s) ease-in-out infinite;
-	transform-origin: center;
+	cursor: grab;
+	user-select: none;
+	touch-action: none;
+}
+
+.collage-hand-img.is-dragging {
+	animation: none;
+	transform: none;
+	z-index: 50;
+	cursor: grabbing;
+	border-color: rgba(219, 39, 119, 0.8);
+	box-shadow: 0 0 30px rgba(219, 39, 119, 0.5), 0 0 60px rgba(107, 33, 168, 0.3);
 }
 
