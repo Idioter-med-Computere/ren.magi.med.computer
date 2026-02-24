@@ -208,7 +208,7 @@ h1, h2, h3 {
 .mist-blob {
 	position: absolute;
 	border-radius: 50%;
-	filter: blur(55px);
+	filter: blur(75px);
 	pointer-events: none;
 	z-index: 5;
 	animation: mist-drift var(--mist-duration, 8s) ease-in-out infinite;

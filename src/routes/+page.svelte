@@ -451,14 +451,22 @@
 						/>
 					{/each}
 
-					<!-- Mist floating ON TOP of hands -->
-					<div class="mist-blob" style="width:320px;height:320px;background:rgba(107,33,168,0.22);top:5%;left:3%;--drift-x:50px;--drift-y:-35px;--mist-duration:9s;--mist-opacity:0.2;"></div>
-					<div class="mist-blob" style="width:220px;height:220px;background:rgba(6,182,212,0.18);top:52%;left:62%;--drift-x:-40px;--drift-y:-50px;--mist-duration:12s;--mist-opacity:0.15;"></div>
-					<div class="mist-blob" style="width:270px;height:270px;background:rgba(219,39,119,0.18);top:72%;left:12%;--drift-x:60px;--drift-y:28px;--mist-duration:7s;--mist-opacity:0.17;"></div>
-					<div class="mist-blob" style="width:180px;height:180px;background:rgba(139,92,246,0.28);top:12%;left:75%;--drift-x:-28px;--drift-y:-60px;--mist-duration:14s;--mist-opacity:0.24;"></div>
-					<div class="mist-blob" style="width:250px;height:250px;background:rgba(107,33,168,0.15);top:38%;left:32%;--drift-x:70px;--drift-y:40px;--mist-duration:10s;--mist-opacity:0.12;"></div>
-					<div class="mist-blob" style="width:190px;height:190px;background:rgba(16,185,129,0.13);top:82%;left:52%;--drift-x:-45px;--drift-y:-22px;--mist-duration:11s;--mist-opacity:0.11;"></div>
-					<div class="mist-blob" style="width:200px;height:200px;background:rgba(219,39,119,0.14);top:28%;left:50%;--drift-x:35px;--drift-y:55px;--mist-duration:8s;--mist-opacity:0.13;"></div>
+					<!-- God-like mist floating ON TOP of hands -->
+					<!-- White ethereal light -->
+					<div class="mist-blob" style="width:500px;height:500px;background:rgba(255,255,255,0.18);top:-5%;left:20%;--drift-x:40px;--drift-y:30px;--mist-duration:13s;--mist-opacity:0.22;"></div>
+					<div class="mist-blob" style="width:420px;height:420px;background:rgba(255,255,255,0.14);top:55%;left:-5%;--drift-x:55px;--drift-y:-40px;--mist-duration:17s;--mist-opacity:0.18;"></div>
+					<div class="mist-blob" style="width:380px;height:380px;background:rgba(255,255,255,0.12);top:30%;left:60%;--drift-x:-50px;--drift-y:35px;--mist-duration:15s;--mist-opacity:0.16;"></div>
+					<!-- Deep purple -->
+					<div class="mist-blob" style="width:400px;height:400px;background:rgba(107,33,168,0.38);top:5%;left:3%;--drift-x:60px;--drift-y:-40px;--mist-duration:9s;--mist-opacity:0.38;"></div>
+					<div class="mist-blob" style="width:350px;height:350px;background:rgba(107,33,168,0.3);top:45%;left:38%;--drift-x:75px;--drift-y:45px;--mist-duration:11s;--mist-opacity:0.3;"></div>
+					<!-- Cyan wisps -->
+					<div class="mist-blob" style="width:280px;height:280px;background:rgba(6,182,212,0.32);top:55%;left:62%;--drift-x:-45px;--drift-y:-55px;--mist-duration:12s;--mist-opacity:0.32;"></div>
+					<div class="mist-blob" style="width:220px;height:220px;background:rgba(6,182,212,0.25);top:15%;left:45%;--drift-x:30px;--drift-y:-45px;--mist-duration:8s;--mist-opacity:0.25;"></div>
+					<!-- Magenta -->
+					<div class="mist-blob" style="width:320px;height:320px;background:rgba(219,39,119,0.3);top:70%;left:10%;--drift-x:65px;--drift-y:30px;--mist-duration:7s;--mist-opacity:0.3;"></div>
+					<div class="mist-blob" style="width:240px;height:240px;background:rgba(219,39,119,0.22);top:25%;left:55%;--drift-x:40px;--drift-y:60px;--mist-duration:9s;--mist-opacity:0.22;"></div>
+					<!-- Violet -->
+					<div class="mist-blob" style="width:260px;height:260px;background:rgba(139,92,246,0.4);top:10%;left:72%;--drift-x:-30px;--drift-y:-65px;--mist-duration:14s;--mist-opacity:0.4;"></div>
 
 					<!-- Edge vignette -->
 					<div class="mist-vignette"></div>
