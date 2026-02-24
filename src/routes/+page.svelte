@@ -451,22 +451,25 @@
 						/>
 					{/each}
 
-					<!-- God-like mist floating ON TOP of hands -->
-					<!-- White ethereal light -->
-					<div class="mist-blob" style="width:500px;height:500px;background:rgba(255,255,255,0.18);top:-5%;left:20%;--drift-x:40px;--drift-y:30px;--mist-duration:13s;--mist-opacity:0.22;"></div>
-					<div class="mist-blob" style="width:420px;height:420px;background:rgba(255,255,255,0.14);top:55%;left:-5%;--drift-x:55px;--drift-y:-40px;--mist-duration:17s;--mist-opacity:0.18;"></div>
-					<div class="mist-blob" style="width:380px;height:380px;background:rgba(255,255,255,0.12);top:30%;left:60%;--drift-x:-50px;--drift-y:35px;--mist-duration:15s;--mist-opacity:0.16;"></div>
+					<!-- Thick colorful mystical mist ON TOP of hands -->
+					<!-- White ethereal fog -->
+					<div class="mist-blob" style="width:560px;height:560px;background:radial-gradient(ellipse,rgba(255,255,255,0.75) 0%,transparent 70%);top:-8%;left:18%;--drift-x:45px;--drift-y:35px;--mist-duration:13s;"></div>
+					<div class="mist-blob" style="width:460px;height:460px;background:radial-gradient(ellipse,rgba(255,255,255,0.6) 0%,transparent 70%);top:58%;left:-8%;--drift-x:60px;--drift-y:-45px;--mist-duration:17s;"></div>
+					<div class="mist-blob" style="width:400px;height:400px;background:radial-gradient(ellipse,rgba(255,255,255,0.55) 0%,transparent 70%);top:28%;left:58%;--drift-x:-55px;--drift-y:38px;--mist-duration:15s;"></div>
 					<!-- Deep purple -->
-					<div class="mist-blob" style="width:400px;height:400px;background:rgba(107,33,168,0.38);top:5%;left:3%;--drift-x:60px;--drift-y:-40px;--mist-duration:9s;--mist-opacity:0.38;"></div>
-					<div class="mist-blob" style="width:350px;height:350px;background:rgba(107,33,168,0.3);top:45%;left:38%;--drift-x:75px;--drift-y:45px;--mist-duration:11s;--mist-opacity:0.3;"></div>
-					<!-- Cyan wisps -->
-					<div class="mist-blob" style="width:280px;height:280px;background:rgba(6,182,212,0.32);top:55%;left:62%;--drift-x:-45px;--drift-y:-55px;--mist-duration:12s;--mist-opacity:0.32;"></div>
-					<div class="mist-blob" style="width:220px;height:220px;background:rgba(6,182,212,0.25);top:15%;left:45%;--drift-x:30px;--drift-y:-45px;--mist-duration:8s;--mist-opacity:0.25;"></div>
+					<div class="mist-blob" style="width:480px;height:480px;background:radial-gradient(ellipse,rgba(107,33,168,0.9) 0%,transparent 70%);top:2%;left:0%;--drift-x:65px;--drift-y:-45px;--mist-duration:9s;"></div>
+					<div class="mist-blob" style="width:420px;height:420px;background:radial-gradient(ellipse,rgba(107,33,168,0.8) 0%,transparent 70%);top:42%;left:35%;--drift-x:80px;--drift-y:50px;--mist-duration:11s;"></div>
 					<!-- Magenta -->
-					<div class="mist-blob" style="width:320px;height:320px;background:rgba(219,39,119,0.3);top:70%;left:10%;--drift-x:65px;--drift-y:30px;--mist-duration:7s;--mist-opacity:0.3;"></div>
-					<div class="mist-blob" style="width:240px;height:240px;background:rgba(219,39,119,0.22);top:25%;left:55%;--drift-x:40px;--drift-y:60px;--mist-duration:9s;--mist-opacity:0.22;"></div>
+					<div class="mist-blob" style="width:380px;height:380px;background:radial-gradient(ellipse,rgba(219,39,119,0.85) 0%,transparent 70%);top:68%;left:8%;--drift-x:70px;--drift-y:32px;--mist-duration:7s;"></div>
+					<div class="mist-blob" style="width:300px;height:300px;background:radial-gradient(ellipse,rgba(219,39,119,0.75) 0%,transparent 70%);top:22%;left:52%;--drift-x:42px;--drift-y:65px;--mist-duration:9s;"></div>
+					<!-- Cyan -->
+					<div class="mist-blob" style="width:350px;height:350px;background:radial-gradient(ellipse,rgba(6,182,212,0.85) 0%,transparent 70%);top:52%;left:60%;--drift-x:-50px;--drift-y:-58px;--mist-duration:12s;"></div>
+					<div class="mist-blob" style="width:260px;height:260px;background:radial-gradient(ellipse,rgba(6,182,212,0.7) 0%,transparent 70%);top:12%;left:42%;--drift-x:32px;--drift-y:-48px;--mist-duration:8s;"></div>
 					<!-- Violet -->
-					<div class="mist-blob" style="width:260px;height:260px;background:rgba(139,92,246,0.4);top:10%;left:72%;--drift-x:-30px;--drift-y:-65px;--mist-duration:14s;--mist-opacity:0.4;"></div>
+					<div class="mist-blob" style="width:320px;height:320px;background:radial-gradient(ellipse,rgba(139,92,246,0.9) 0%,transparent 70%);top:8%;left:70%;--drift-x:-32px;--drift-y:-68px;--mist-duration:14s;"></div>
+					<div class="mist-blob" style="width:280px;height:280px;background:radial-gradient(ellipse,rgba(139,92,246,0.75) 0%,transparent 70%);top:78%;left:45%;--drift-x:-55px;--drift-y:30px;--mist-duration:10s;"></div>
+					<!-- Gold accent -->
+					<div class="mist-blob" style="width:240px;height:240px;background:radial-gradient(ellipse,rgba(245,158,11,0.7) 0%,transparent 70%);top:35%;left:8%;--drift-x:50px;--drift-y:-30px;--mist-duration:16s;"></div>
 
 					<!-- Edge vignette -->
 					<div class="mist-vignette"></div>

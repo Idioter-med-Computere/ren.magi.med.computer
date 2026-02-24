@@ -187,15 +187,13 @@ h1, h2, h3 {
 	}
 }
 
-/* Mist blob drift */
+/* Mist blob drift — transform only, no opacity fade */
 @keyframes mist-drift {
 	0%, 100% {
 		transform: translate(0, 0) scale(1);
-		opacity: var(--mist-opacity, 0.12);
 	}
 	50% {
-		transform: translate(var(--drift-x, 30px), var(--drift-y, -20px)) scale(1.25);
-		opacity: calc(var(--mist-opacity, 0.12) * 0.45);
+		transform: translate(var(--drift-x, 30px), var(--drift-y, -20px)) scale(1.18);
 	}
 }
 
@@ -208,7 +206,7 @@ h1, h2, h3 {
 .mist-blob {
 	position: absolute;
 	border-radius: 50%;
-	filter: blur(75px);
+	filter: blur(85px);
 	pointer-events: none;
 	z-index: 5;
 	animation: mist-drift var(--mist-duration, 8s) ease-in-out infinite;
