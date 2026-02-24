@@ -225,29 +225,23 @@ h1, h2, h3 {
 		linear-gradient(to right, rgba(10,10,10,0.6) 0%, transparent 12%, transparent 88%, rgba(10,10,10,0.6) 100%);
 }
 
-/* Collage grid */
-.collage-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-	gap: 6px;
+/* Collage free-floating container */
+.collage-free-container {
+	position: relative;
+	width: 100%;
+	min-height: 78vh;
+	overflow: hidden;
+	border-radius: 0.5rem;
 }
 
-/* Individual collage hand image */
+/* Individual collage hand image - freely floating */
 .collage-hand-img {
-	width: 100%;
+	position: absolute;
 	aspect-ratio: 1;
 	object-fit: cover;
-	border: 1px solid rgba(139, 92, 246, 0.35);
-	transition: border-color 0.4s ease, box-shadow 0.4s ease;
+	border: 1px solid rgba(139, 92, 246, 0.3);
+	z-index: 1;
 	animation: float-hand var(--float-duration, 6s) var(--float-delay, 0s) ease-in-out infinite;
 	transform-origin: center;
 }
 
-.collage-hand-img:hover {
-	border-color: var(--gothic-magenta);
-	box-shadow:
-		0 0 25px rgba(219, 39, 119, 0.6),
-		0 0 50px rgba(107, 33, 168, 0.3);
-	position: relative;
-	z-index: 20;
-}

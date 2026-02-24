@@ -23,6 +23,9 @@
 	let collageImages = $state<string[]>([]);
 	let loadingCollage = $state(false);
 
+	type CollageItem = { url: string; x: number; y: number; size: number; floatDuration: number; floatDelay: number; floatDist: number; cardRot: number };
+	let collageItems = $state<CollageItem[]>([]);
+
 	// Stars background
 	let stars = $state<Array<{ x: number; y: number; duration: number; delay: number; brightness: number }>>([]);
 
@@ -157,6 +160,16 @@
 		loadingCollage = true;
 		readingVisible = false;
 		collageImages = await getAllHandImages();
+		collageItems = collageImages.map((url) => ({
+			url,
+			x: 2 + Math.random() * 72,
+			y: 2 + Math.random() * 72,
+			size: 130 + Math.floor(Math.random() * 100),
+			floatDuration: 4 + Math.random() * 6,
+			floatDelay: Math.random() * 5,
+			floatDist: -(6 + Math.random() * 16),
+			cardRot: (Math.random() - 0.5) * 14,
+		}));
 		loadingCollage = false;
 	}
 
@@ -426,29 +439,28 @@
 					</p>
 				</div>
 			{:else}
-				<div class="collage-mist-container rounded-lg overflow-hidden">
-					<!-- Floating mist blobs -->
-					<div class="mist-blob" style="width:300px;height:300px;background:rgba(107,33,168,0.22);top:5%;left:3%;--drift-x:45px;--drift-y:-35px;--mist-duration:9s;--mist-opacity:0.18;"></div>
-					<div class="mist-blob" style="width:200px;height:200px;background:rgba(6,182,212,0.18);top:55%;left:65%;--drift-x:-35px;--drift-y:-45px;--mist-duration:12s;--mist-opacity:0.14;"></div>
-					<div class="mist-blob" style="width:250px;height:250px;background:rgba(219,39,119,0.18);top:75%;left:15%;--drift-x:55px;--drift-y:25px;--mist-duration:7s;--mist-opacity:0.16;"></div>
-					<div class="mist-blob" style="width:170px;height:170px;background:rgba(139,92,246,0.25);top:15%;left:78%;--drift-x:-25px;--drift-y:-55px;--mist-duration:14s;--mist-opacity:0.22;"></div>
-					<div class="mist-blob" style="width:230px;height:230px;background:rgba(107,33,168,0.15);top:40%;left:35%;--drift-x:65px;--drift-y:35px;--mist-duration:10s;--mist-opacity:0.1;"></div>
-					<div class="mist-blob" style="width:180px;height:180px;background:rgba(16,185,129,0.12);top:85%;left:55%;--drift-x:-40px;--drift-y:-20px;--mist-duration:11s;--mist-opacity:0.1;"></div>
+				<div class="collage-free-container">
+					<!-- Hands floating freely -->
+					{#each collageItems as item}
+						<img
+							src={item.url}
+							alt="A hand offered to the Oracle"
+							loading="lazy"
+							class="collage-hand-img"
+							style="left:{item.x.toFixed(1)}%;top:{item.y.toFixed(1)}%;width:{item.size}px;--float-duration:{item.floatDuration.toFixed(1)}s;--float-delay:{item.floatDelay.toFixed(1)}s;--float-dist:{item.floatDist.toFixed(0)}px;--card-rot:{item.cardRot.toFixed(1)}deg;"
+						/>
+					{/each}
 
-					<!-- Images grid -->
-					<div class="collage-grid">
-						{#each collageImages as img, i}
-							<img
-								src={img}
-								alt="A hand offered to the Oracle"
-								loading="lazy"
-								class="collage-hand-img"
-								style="--float-duration: {(4 + (i * 1.3) % 4).toFixed(1)}s; --float-delay: {((i * 0.9) % 3).toFixed(1)}s; --float-dist: {-(6 + (i * 3) % 10)}px; --card-rot: {(((i % 7) - 3) * 0.8).toFixed(1)}deg;"
-							/>
-						{/each}
-					</div>
+					<!-- Mist floating ON TOP of hands -->
+					<div class="mist-blob" style="width:320px;height:320px;background:rgba(107,33,168,0.22);top:5%;left:3%;--drift-x:50px;--drift-y:-35px;--mist-duration:9s;--mist-opacity:0.2;"></div>
+					<div class="mist-blob" style="width:220px;height:220px;background:rgba(6,182,212,0.18);top:52%;left:62%;--drift-x:-40px;--drift-y:-50px;--mist-duration:12s;--mist-opacity:0.15;"></div>
+					<div class="mist-blob" style="width:270px;height:270px;background:rgba(219,39,119,0.18);top:72%;left:12%;--drift-x:60px;--drift-y:28px;--mist-duration:7s;--mist-opacity:0.17;"></div>
+					<div class="mist-blob" style="width:180px;height:180px;background:rgba(139,92,246,0.28);top:12%;left:75%;--drift-x:-28px;--drift-y:-60px;--mist-duration:14s;--mist-opacity:0.24;"></div>
+					<div class="mist-blob" style="width:250px;height:250px;background:rgba(107,33,168,0.15);top:38%;left:32%;--drift-x:70px;--drift-y:40px;--mist-duration:10s;--mist-opacity:0.12;"></div>
+					<div class="mist-blob" style="width:190px;height:190px;background:rgba(16,185,129,0.13);top:82%;left:52%;--drift-x:-45px;--drift-y:-22px;--mist-duration:11s;--mist-opacity:0.11;"></div>
+					<div class="mist-blob" style="width:200px;height:200px;background:rgba(219,39,119,0.14);top:28%;left:50%;--drift-x:35px;--drift-y:55px;--mist-duration:8s;--mist-opacity:0.13;"></div>
 
-					<!-- Edge mist vignette -->
+					<!-- Edge vignette -->
 					<div class="mist-vignette"></div>
 				</div>
 			{/if}
