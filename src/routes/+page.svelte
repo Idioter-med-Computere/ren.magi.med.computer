@@ -52,29 +52,28 @@
 		}
 
 		try {
-			// Race getUserMedia against a timeout — some browsers (Arc) hang silently
-			const mediaPromise = navigator.mediaDevices.getUserMedia({
+			stream = await navigator.mediaDevices.getUserMedia({
 				video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 960 } },
 			});
-			const timeoutPromise = new Promise<never>((_, reject) =>
-				setTimeout(() => reject(new Error('Camera request timed out')), 5000)
-			);
-
-			stream = await Promise.race([mediaPromise, timeoutPromise]);
-
-			if (videoEl) {
-				videoEl.srcObject = stream;
-				videoEl.onplaying = () => {
-					requestAnimationFrame(() => {
-						cameraReady = true;
-					});
-				};
-				await videoEl.play();
-			}
 		} catch (err) {
 			console.error('Camera error:', err);
 			cameraFailed = true;
 			uploadError = 'The Oracle\'s eye cannot see. Grant camera permission in your browser settings, or upload a photo instead.';
+			return;
+		}
+
+		// getUserMedia succeeded — now wire up the video element
+		// Wait an extra tick in case Svelte hasn't rendered it yet after permission grant
+		if (!videoEl) await new Promise((r) => setTimeout(r, 100));
+
+		if (videoEl) {
+			videoEl.srcObject = stream;
+			videoEl.onplaying = () => {
+				requestAnimationFrame(() => { cameraReady = true; });
+			};
+			// Don't await play() — the autoplay attribute handles it,
+			// and awaiting it can throw on first-time permission grants
+			videoEl.play().catch(() => {});
 		}
 	}
 
