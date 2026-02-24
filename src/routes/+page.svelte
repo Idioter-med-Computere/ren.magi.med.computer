@@ -12,6 +12,9 @@
 	let capturedImage = $state<string | null>(null);
 	let uploading = $state(false);
 	let uploadError = $state<string | null>(null);
+	let cameraReady = $state(false);
+	let cameraFailed = $state(false);
+	let fileInputEl = $state<HTMLInputElement | null>(null);
 
 	let reading = $state<ReturnType<typeof generateReading> | null>(null);
 	let washResult = $state<ReturnType<typeof shouldWashHands> | null>(null);
@@ -37,33 +40,60 @@
 		phase = 'camera';
 		capturedImage = null;
 		uploadError = null;
+		cameraReady = false;
+		cameraFailed = false;
 
 		await new Promise((r) => setTimeout(r, 100));
 
+		if (!navigator.mediaDevices?.getUserMedia) {
+			cameraFailed = true;
+			uploadError = 'Thy device lacks the Oracle\'s eye. Upload a photo instead.';
+			return;
+		}
+
 		try {
-			stream = await navigator.mediaDevices.getUserMedia({
+			// Race getUserMedia against a timeout — some browsers (Arc) hang silently
+			const mediaPromise = navigator.mediaDevices.getUserMedia({
 				video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 960 } },
 			});
+			const timeoutPromise = new Promise<never>((_, reject) =>
+				setTimeout(() => reject(new Error('Camera request timed out')), 5000)
+			);
+
+			stream = await Promise.race([mediaPromise, timeoutPromise]);
+
 			if (videoEl) {
 				videoEl.srcObject = stream;
+				videoEl.onplaying = () => {
+					requestAnimationFrame(() => {
+						cameraReady = true;
+					});
+				};
+				await videoEl.play();
 			}
 		} catch (err) {
 			console.error('Camera error:', err);
-			uploadError = 'Could not access camera. Please grant permission and try again.';
+			cameraFailed = true;
+			uploadError = 'The Oracle\'s eye cannot see. Grant camera permission in your browser settings, or upload a photo instead.';
 		}
 	}
 
 	function capturePhoto() {
-		if (!videoEl || !canvasEl) return;
+		if (!videoEl || !canvasEl || !cameraReady) return;
 		const ctx = canvasEl.getContext('2d');
 		if (!ctx) return;
 
-		canvasEl.width = videoEl.videoWidth;
-		canvasEl.height = videoEl.videoHeight;
-		ctx.drawImage(videoEl, 0, 0);
-		capturedImage = canvasEl.toDataURL('image/jpeg', 0.85);
+		const w = videoEl.videoWidth || videoEl.clientWidth;
+		const h = videoEl.videoHeight || videoEl.clientHeight;
+		canvasEl.width = w;
+		canvasEl.height = h;
 
-		stopCamera();
+		// Draw in a rAF to guarantee we have a rendered frame
+		requestAnimationFrame(() => {
+			ctx.drawImage(videoEl!, 0, 0, w, h);
+			capturedImage = canvasEl!.toDataURL('image/jpeg', 0.85);
+			stopCamera();
+		});
 	}
 
 	function stopCamera() {
@@ -73,8 +103,22 @@
 		}
 	}
 
+	function handleFileUpload(e: Event) {
+		const input = e.target as HTMLInputElement;
+		const file = input.files?.[0];
+		if (!file) return;
+
+		const reader = new FileReader();
+		reader.onload = () => {
+			capturedImage = reader.result as string;
+			stopCamera();
+		};
+		reader.readAsDataURL(file);
+	}
+
 	function retakePhoto() {
 		capturedImage = null;
+		cameraFailed = false;
 		startCamera();
 	}
 
@@ -128,7 +172,7 @@
 </script>
 
 <svelte:head>
-	<title>The Hand Oracle</title>
+	<title>Ren Magi - The Hand Oracle</title>
 </svelte:head>
 
 <!-- Stars background -->
@@ -145,11 +189,7 @@
 	<!-- ═══════════════ WELCOME PHASE ═══════════════ -->
 	{#if phase === 'welcome'}
 		<div class="mx-auto max-w-2xl text-center animate-fade-in">
-			<div class="mb-6 text-6xl">&#x270B;</div>
-
-			<h1 class="font-fraktur text-5xl md:text-7xl text-purple-400 glow-text mb-4">
-				The Hand Oracle
-			</h1>
+			<img src="/logo.webp" alt="Ren Magi" class="mx-auto mb-6 w-64 md:w-80 drop-shadow-[0_0_30px_rgba(107,33,168,0.5)]" />
 
 			<p class="shimmer-text text-2xl md:text-3xl font-cinzel mb-8">
 				Reveal Your Destiny
@@ -182,24 +222,50 @@
 	<!-- ═══════════════ CAMERA PHASE ═══════════════ -->
 	{:else if phase === 'camera'}
 		<div class="mx-auto max-w-2xl text-center animate-fade-in">
+			<img src="/logo.webp" alt="Ren Magi" class="mx-auto mb-4 w-32 md:w-40 drop-shadow-[0_0_20px_rgba(107,33,168,0.4)]" />
 			<h2 class="font-fraktur text-3xl md:text-4xl text-purple-400 glow-text mb-6">
 				Present Thy Hand
 			</h2>
 
-			{#if !capturedImage}
-				<div class="gothic-border rounded-lg overflow-hidden mb-6 bg-black/60">
-					<video
-						bind:this={videoEl}
-						autoplay
-						playsinline
-						class="w-full max-h-[60vh] object-cover"
-					></video>
-				</div>
-				<canvas bind:this={canvasEl} class="hidden"></canvas>
+			<canvas bind:this={canvasEl} class="hidden"></canvas>
+			<input bind:this={fileInputEl} type="file" accept="image/*" capture="environment" class="hidden" onchange={handleFileUpload} />
 
-				<div class="flex gap-4 justify-center">
-					<button class="gothic-btn rounded-lg" onclick={capturePhoto}>
-						&#128064; Capture Thy Hand
+			{#if !capturedImage}
+				{#if cameraFailed}
+					<div class="gothic-border rounded-lg p-8 mb-6 bg-black/60">
+						<p class="text-red-400 font-garamond text-xl mb-6 glow-text">
+							{uploadError}
+						</p>
+						<button class="gothic-btn rounded-lg" onclick={() => fileInputEl?.click()}>
+							&#128247; Upload a Photo
+						</button>
+					</div>
+				{:else}
+					<div class="gothic-border rounded-lg overflow-hidden mb-6 bg-black/60">
+						<video
+							bind:this={videoEl}
+							autoplay
+							playsinline
+							class="w-full max-h-[60vh] object-cover"
+						></video>
+					</div>
+				{/if}
+
+				<div class="flex gap-4 justify-center flex-wrap">
+					{#if !cameraFailed}
+						<button class="gothic-btn rounded-lg" onclick={capturePhoto} disabled={!cameraReady}>
+							{#if cameraReady}
+								&#128064; Capture Thy Hand
+							{:else}
+								&#9764; Awakening the eye...
+							{/if}
+						</button>
+					{/if}
+					<button
+						class="gothic-btn rounded-lg !bg-gray-800 !border-gray-600"
+						onclick={() => fileInputEl?.click()}
+					>
+						&#128247; Upload Instead
 					</button>
 					<button
 						class="gothic-btn rounded-lg !bg-gray-800 !border-gray-600"
@@ -239,6 +305,7 @@
 	<!-- ═══════════════ READING PHASE ═══════════════ -->
 	{:else if phase === 'reading'}
 		<div class="mx-auto max-w-3xl animate-fade-in">
+			<img src="/logo.webp" alt="Ren Magi" class="mx-auto mb-6 w-28 md:w-36 drop-shadow-[0_0_20px_rgba(107,33,168,0.4)]" />
 			<!-- Wash Hands Verdict -->
 			{#if washResult}
 				<div
@@ -250,7 +317,7 @@
 						: 'box-shadow: 0 0 30px rgba(16,185,129,0.4), inset 0 0 20px rgba(16,185,129,0.1)'}
 				>
 					<div class="text-5xl mb-4">
-						{washResult.verdict ? '&#128167;' : '&#10024;'}
+						{washResult.verdict ? '\u{1F4A7}' : '\u{2728}'}
 					</div>
 					<h2
 						class="font-fraktur text-3xl md:text-4xl mb-4"
@@ -338,6 +405,7 @@
 	{:else if phase === 'collage'}
 		<div class="mx-auto max-w-6xl animate-fade-in">
 			<div class="text-center mb-8">
+				<img src="/logo.webp" alt="Ren Magi" class="mx-auto mb-4 w-32 md:w-40 drop-shadow-[0_0_20px_rgba(107,33,168,0.4)]" />
 				<h2 class="font-fraktur text-4xl md:text-5xl text-purple-400 glow-text mb-4">
 					The Sacred Collage
 				</h2>

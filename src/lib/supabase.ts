@@ -42,24 +42,40 @@ export async function uploadHandImage(imageBlob: Blob): Promise<string | null> {
 
 export async function getAllHandImages(): Promise<string[]> {
 	const client = getClient();
-	if (!client) return [];
+	if (!client) {
+		console.warn('[collage] No Supabase client');
+		return [];
+	}
 
 	const { data, error } = await client.storage.from('hands').list('', {
 		limit: 200,
 		sortBy: { column: 'created_at', order: 'desc' }
 	});
 
-	if (error || !data) {
-		console.error('List error:', error);
+	console.log('[collage] list response:', { data, error });
+
+	if (error) {
+		console.error('[collage] List error:', error.message);
 		return [];
 	}
 
-	return data
-		.filter((f) => f.name.endsWith('.jpg') || f.name.endsWith('.png'))
+	if (!data || data.length === 0) {
+		console.warn('[collage] Empty result. Add a SELECT policy for anon on the hands bucket.');
+		return [];
+	}
+
+	const images = data
+		.filter((f) => {
+			const keep = f.name && !f.name.startsWith('.') && f.id;
+			return keep;
+		})
 		.map((f) => {
 			const {
 				data: { publicUrl }
 			} = client.storage.from('hands').getPublicUrl(f.name);
 			return publicUrl;
 		});
+
+	console.log('[collage] resolved URLs:', images);
+	return images;
 }
