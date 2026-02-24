@@ -502,7 +502,7 @@
 					<div class="mist-blob fog-c fog-light" style="width:480px;height:480px;background:radial-gradient(ellipse,rgba(255,255,255,0.65) 0%,transparent 70%);top:56%;left:-10%;--fog-duration:26s;--morph-duration:13s;--fog-delay:-4s;"></div>
 					<div class="mist-blob fog-b fog-light" style="width:420px;height:420px;background:radial-gradient(ellipse,rgba(255,255,255,0.58) 0%,transparent 70%);top:26%;left:56%;--fog-duration:23s;--morph-duration:11s;--fog-delay:-9s;"></div>
 					<!-- Deep purple -->
-					<div class="mist-blob fog-d" style="width:500px;height:500px;background:radial-gradient(ellipse,rgba(107,33,168,0.9) 0%,transparent 70%);top:0%;left:-2%;--fog-duration:18s;--morph-duration:7s;--fog-delay:-2s;"></div>
+					<div class="mist-blob fog-d" style="width:500px;height:500px;background:radial-gradient(ellipse,rgba(107,33,168,0.9) 0%,transparent 70%);top:6%;left:2%;--fog-duration:18s;--morph-duration:7s;--fog-delay:-2s;"></div>
 					<div class="mist-blob fog-a" style="width:440px;height:440px;background:radial-gradient(ellipse,rgba(107,33,168,0.8) 0%,transparent 70%);top:40%;left:33%;--fog-duration:24s;--morph-duration:10s;--fog-delay:-7s;"></div>
 					<!-- Magenta -->
 					<div class="mist-blob fog-b" style="width:400px;height:400px;background:radial-gradient(ellipse,rgba(219,39,119,0.88) 0%,transparent 70%);top:66%;left:6%;--fog-duration:16s;--morph-duration:8s;--fog-delay:-1s;"></div>

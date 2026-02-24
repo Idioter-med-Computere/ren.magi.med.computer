@@ -266,15 +266,15 @@ h1, h2, h3 {
 	mix-blend-mode: screen;
 }
 
-/* Edge vignette */
+/* Edge vignette — fully opaque at edges so nothing bleeds through */
 .mist-vignette {
 	position: absolute;
 	inset: 0;
 	pointer-events: none;
 	z-index: 6;
 	background:
-		linear-gradient(to bottom, rgba(10,10,10,0.75) 0%, transparent 18%, transparent 82%, rgba(10,10,10,0.75) 100%),
-		linear-gradient(to right, rgba(10,10,10,0.6) 0%, transparent 12%, transparent 88%, rgba(10,10,10,0.6) 100%);
+		linear-gradient(to bottom, #0a0a0a 0%, transparent 15%, transparent 85%, #0a0a0a 100%),
+		linear-gradient(to right, #0a0a0a 0%, transparent 8%, transparent 92%, #0a0a0a 100%);
 }
 
 /* Collage free-floating container */
@@ -283,7 +283,16 @@ h1, h2, h3 {
 	width: 100%;
 	min-height: 78vh;
 	overflow: hidden;
-	border-radius: 0.5rem;
+	border-radius: 0;
+	/* mask-image softens the hard clip from overflow:hidden into a smooth fade */
+	mask-image:
+		linear-gradient(to bottom, transparent 0%, black 9%, black 91%, transparent 100%),
+		linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+	mask-composite: intersect;
+	-webkit-mask-image:
+		linear-gradient(to bottom, transparent 0%, black 9%, black 91%, transparent 100%),
+		linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+	-webkit-mask-composite: source-in;
 }
 
 /* Individual collage hand image - freely floating */
